@@ -1,0 +1,578 @@
+{% extends 'runobase.html' %}
+
+{% block body %}
+<div id='pupil'>
+    <style>
+        #pupil{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+    </style>
+    {% if request.user.userprofile %}
+        <div class='userProfile'>
+            <style>
+                .userProfile{
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    align-content: center;
+                    align-items: center;
+                }
+                .userProfile #userImg img{
+                    background-image: linear-gradient(rgb(252, 252, 252), rgb(1, 31, 106));
+                }
+                @media screen and (max-width: 1361px){
+                    .userProfile{
+                        padding: 20px;
+                        width: 100%;
+                    }
+                .userProfile #userImg{
+                    width: 25%;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    align-content: center;
+
+                }
+                .userProfile #userImg img{
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 50%; 
+                }
+            }
+
+            @media screen and (min-width: 1361px){
+                .userProfile{
+                    width: 30%;
+                    padding: 20px;
+                }
+                .pupilDetails{
+                    width: 60%;
+                }
+                
+                .userProfile #userImg{
+                    width: 95%;
+                    flex-wrap: wrap;
+                    margin: auto;   
+                    justify-content: center;
+                    align-content: center;
+                    margin-bottom: 20px;
+                }
+                .userProfile #userImg img{
+                    width: 150px;
+                    height: 150px;
+                    display: block;
+                    margin: auto;
+                    border-radius: 50%; 
+                }
+            }
+            </style>
+            <div id='userImg'>
+                {% if request.user.userprofile.profile_image %}
+                    <img src='{{ request.user.userprofile.profile_image.url }}' alt='{{ request.user.username}}'>
+                    
+                {% else %}
+                    <img>
+                {% endif %}
+            </div>
+            <div id='userProfileText'>
+                <style>
+                    #viewChat, #viewChats{
+                        background-color: rgba(0, 0, 0, 1);
+                        color: aliceblue;
+                        border: 1px solid black;
+                        padding: 10px;
+                        border-radius: 10px;
+                        box-shadow: 0px 0px 10px 0px black;
+                        cursor: pointer;
+                    }
+                </style>
+
+                <strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong>
+                <br>
+                {% if current_class %}{{current_class}}{% endif %}
+                <br>
+                {{ request.user.email }}
+                <br>
+                {{request.user.userprofile.age}}
+                <br>
+                <button id='viewChat'>View Chat history</button>
+                
+            </div>
+        </div>
+    {% endif %}
+
+    <div class='pupilDetails'>
+        <style>
+            .pupilDetails{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+            }
+            .day body{
+                background-color: rgb(252, 247, 247, 0.4);
+            }
+            .pupilDetails > a, .pupilDetails > aside{
+                background-color: rgba(0, 0, 0, 0.90);
+                color: rgb(254, 241, 216);
+                text-decoration: none;
+                text-align: center;
+                display: flex;
+                flex-wrap: wrap;
+                padding: 10px;
+                justify-content: space-between;
+                
+
+            }
+
+            
+            .pupilDetails > a:hover, .pupilDetails > aside:hover{
+                box-shadow: 0px 1px 12px 0px black;
+            }
+            .night .pupilDetails > a, .night .pupilDetails > aside,.night #viewChat, .night ,.night #viewChats{
+                background-color: rgba(250, 250, 250, 0.8);
+                color: rgb(52, 36, 6);
+                text-decoration: none;
+                text-align: center;
+
+            }
+            .night #pupil{
+                 background-color: rgb(8, 12, 0);
+                color: white;
+            }
+            .pupilDetails > a:nth-of-type(3n), .pupilDetails > aside:nth-of-type(3n){
+                background-color: rgba(149, 198, 52, 0.93);
+                color: rgb(65, 52, 28);
+            }
+           
+                .pupilDetails > a > div, .pupilDetails > aside > div{
+                    padding-top: 30px;
+                    padding-bottom: 30px;
+                    
+                }
+            @media screen and (max-width: 1361px){
+                .pupilDetails > a, .pupilDetails > aside{
+                    width: 40%;
+                    margin: 10px;
+                    border-radius: 20px;
+                }
+                
+            }
+            @media screen and (min-width: 1361px){
+                .pupilDetails > a, .pupilDetails > aside{
+                    width: 23%;
+                    margin: 10px;
+                    border-radius: 20px;
+                }
+                
+            }
+            .decorator{
+                
+                width: 15px;
+                max-height: 15px;
+                border-radius: 50%; 
+                background-image: linear-gradient(aliceblue, rgb(1, 31, 106))
+            }
+            #write{
+                cursor: pointer;
+            }
+        </style>
+
+
+        <a href='{% url "runo:viewResults" class_code %}'> 
+            <span class="decorator"></span>
+            <div>
+            View Result
+            </div>
+        </a>
+
+        <!-- <a href=''>
+            <span class="decorator"></span>
+            <div>
+                View all Results
+            </div>
+        </a> -->
+
+        <a id='getNews'>
+            <span class="decorator"></span>
+            <div>
+                News update
+            </div>
+        </a>
+        <div class="newsModal">
+            <style>
+                a#getNews{
+                    cursor: pointer;
+                }
+                .newsModal{
+                    background-color: lightgray;
+                    border-radius: 5px;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    height: 100vh;
+                    width: 100vw;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    pointer-events: none;
+                    opacity: 0;
+                    transition: opacity 0.6s ease;
+                    color: black;
+                }
+                .newsModal .newsInnerModal{
+                    width: 80%;
+                    background-color: white;
+                    margin: auto;
+                    padding: 12px;
+                }
+                .newsModal .newsInnerModal button{
+                    background-color: rgb(53, 53, 130);
+                    color: aliceblue;
+                    border: 1px solid rgb(53, 53, 130);
+                    box-shadow: 0px 0px 8px 0px rgb(6, 6, 43);
+                    padding: 10px;
+                    border-radius: 6px;
+                    margin: 10px;
+                }
+                .showNewsModal{
+                    pointer-events: auto;
+                    opacity: 1;
+                }
+            </style>
+            <div class="newsInnerModal">
+                <div class="newsHead"></div>
+                <div class="newsBody"></div>
+                <button id='closeNewsModal'>Close news</button>
+                <script>
+                    let closenewsModal = document.querySelector('.newsModal .newsInnerModal button')
+                    closenewsModal.onclick = () => {
+                        document.querySelector('.newsModal').classList.remove('showNewsModal')
+                    }
+
+                    let getNews = document.querySelector('#getNews')
+                    getNews.onclick = () => {
+                        fetch('{% url "runo:viewSchoolMessage" %}')
+                        .then(data => data.json())
+                        .then(messagedetails => {
+                            message = messagedetails.message
+                            let title = message.title
+                            let body = message.message
+
+                            document.querySelector('.newsModal .newsInnerModal .newsHead').innerText = title
+                            document.querySelector('.newsModal .newsInnerModal .newsBody').innerText = body
+                            document.querySelector('.newsModal').classList.add('showNewsModal')
+
+                            
+                        })
+                    }
+
+
+                </script>
+            </div>
+        </div>
+
+        <!-- <a href='mailto:{{ aboutSchool.school_email }}' target='_blank'>
+            <span class="decorator"></span>
+            <div>
+            Write to school
+            </div>
+        </a> -->
+
+        <aside id='write'>
+            <span class="decorator"></span>
+            <div>
+            Write to school
+            </div>
+        </aside>
+
+        <div class="modalContainer">
+            <style>
+                .modalContainer{
+                    width: 100vw;
+                    height: 100vh;
+                    position: fixed;
+                    background-color: aliceblue;
+                    top: 0;
+                    left: 0;
+                    pointer-events: none;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                }
+                .show{
+                    pointer-events: auto;
+                    opacity: 1;
+                }
+                .modal{
+                    padding: 15px;
+                    width: 98%;
+                    margin: auto;
+                }
+                .modal p{
+                    margin: auto;
+                    width: 98%;
+                    background-color: white;
+                    padding: 7px;
+                    margin: 10px;
+                    border-radius: 3px;
+                    transition: 0.3s ease;
+                }
+                .modal input, .modal textarea{
+                     width: 90%; 
+                    padding: 10px;
+                    border-radius: 10px;
+                    border: 1px solid rgb(211, 211, 211);
+                }
+                .modal section{
+                    text-align: center;
+                    padding: 20px;
+                }
+                .modal section> #submit{
+                    background-color: rgba(2, 38, 99, 0.982);
+                    border: 1px solid rgba(2, 38, 99, 0.982);
+                    padding: 10px;
+                    border-radius: 3px;
+                    color: white;
+                    box-shadow: 0px 4px 10px 0px rgba(2, 38, 99, 0.982);
+                }
+
+                .modal section> #cancel{
+                    background-color: white;
+                    border: 1px solid white;
+                    box-shadow: 0px 4px 10px 0px rgba(2, 38, 99, 0.982);
+                    color: rgba(2, 38, 99, 0.982);
+                    padding: 10px;
+                    border-radius: 3px;
+                   
+                }
+                .modal p:hover{
+                    border-left: 3px solid rgba(2, 38, 99, 0.982);
+                }
+                .modal button{
+                    cursor: pointer;
+                }
+            </style>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    let write = document.querySelector('#write')
+                    write.onclick = () => {
+                        let container = document.querySelector('.modalContainer')
+                        container.classList.add('show')
+                    }
+                    let cancel = document.querySelector('.modal #cancel')
+                    cancel.onclick = () => {
+                        let container = document.querySelector('.modalContainer')
+                        container.classList.remove('show')
+                    }
+                    let submit = document.querySelector('.modal #submit')
+                    function validateMessage(message){
+                        let valid = false
+                        let totalChar = message.length
+                        let emptySpaces = 0
+                        let sameChar = message[0]
+                        
+                        for(char of message){
+                            if(char === sameChar){
+                                emptySpaces += 1
+                            }
+                        }
+
+                        if(emptySpaces >= totalChar || message.length < 1){
+                            alert('cannot send empty message or message with only a single character')
+                        }
+                        else{
+                            valid = true
+                        }
+
+                        return valid
+                    }
+                    
+                    submit.onclick = () => {
+                        let subject = document.querySelector('input[name=title]').value
+                        let message = document.querySelector('textarea[name=compose]').value
+                        
+                        const valid = validateMessage(message)
+                        if(valid){
+                            
+                            const form = new FormData()
+                            form.append('csrfmiddlewaretoken', '{{ csrf_token }}')
+                            if(subject.length < 1 ||  subject==' ' || subject == '  '){
+                                subject = 'No Subject'
+                            }
+                            form.append('subject', subject)
+                            form.append('message', message)
+
+                        let container = document.querySelector('.modalContainer')
+                        container.classList.remove('show')
+                        alert('message sent')
+
+
+                            async function sendMsg(){
+                                data = await fetch('{% url "runo:sendMsg" %}', {
+                                'method': 'POST',
+                                'body': form
+                                })
+                                res = await data.json()
+                               
+
+                               // populateMsgBox(eval(res.messages))
+
+                        }
+                        sendMsg()
+                        let viewChat = document.querySelector('#viewChat')
+                        viewChat.disabled = false
+                        viewChat.click()
+                        }
+
+                        
+                    }
+                    let viewChat = document.querySelector('#viewChat')
+                    viewChat.onclick = () => {
+                        fetch('{% url "runo:sendMsg" %}')
+                        .then(res => res.json())
+                        .then(res => populateMsgBox(eval(res.messages)))
+                        viewChat.disabled = true
+                    }
+
+                    function populateMsgBox(list){
+                        var msgContainer = document.createElement('div')
+                        msgContainer.setAttribute('id', 'msgContainer')
+                        for(msg of list){
+                            const subject = msg.subject
+                            const message = msg.message
+                            const sent=msg.sent
+                            const reply = msg.reply
+
+                            msgContent = document.createElement('div')
+                            msgContent.classList.add('msgContent')
+                            msgHolder = document.createElement('aside')
+                            msgHolder.classList.add('msgHolder')
+
+                            subjectDiv = document.createElement('section')
+                            subjectDiv.innerHTML = `<strong><em>${subject}</em></strong>`
+                            msgContent.appendChild(subjectDiv)
+                            
+
+                            msgDiv = document.createElement('article')
+                            msgDiv.innerHTML = `${message} <br>${sent}`
+                            msgContent.appendChild(msgDiv)
+
+                            msgHolder.appendChild(msgContent)
+                            msgContainer.appendChild(msgHolder)
+                            
+
+                            if(reply !='' && reply != null){
+                                replyHolder = document.createElement('div')
+                                replyHolder.classList.add('replyHolder')
+                                replyDiv = document.createElement('div')
+                                replyDiv.className = 'replyDiv'
+                                replyDiv.innerHTML = reply
+                                replyHolder.appendChild(replyDiv)
+                                msgContainer.appendChild(replyHolder)
+                            }
+                        }
+                        let displayContainer = true
+                        let toggleChatBtn = document.createElement('button')
+                        toggleChatBtn.innerText = 'Hide Chat History' 
+                        toggleChatBtn.setAttribute('id', 'viewChats')
+                        toggleChatBtn.onclick = () => {
+                            msgContainer = document.querySelector('#msgContainer')
+                            msgContainer.classList.toggle('hidediv')
+
+                            if(displayContainer){
+                                toggleChatBtn.innerText = 'Show Chat History' 
+                                displayContainer = !displayContainer;
+                            }
+                            else{
+                                toggleChatBtn.innerText = 'Hide Chat History' 
+                                displayContainer = !displayContainer;
+                            }
+                        }
+
+                        viewChat = document.querySelector('#viewChat')
+                        viewChat.parentNode.replaceChild(toggleChatBtn, viewChat)
+
+                        document.querySelector('#pupil').insertBefore(msgContainer, document.querySelector('#pupil').children[2])
+
+                    }
+                })
+            </script>
+            <style>
+                .msgHolder, .replyHolder{
+                    width: 100%;
+                }
+                .replyHolder{
+                    display: flex;
+                    justify-content: end;
+                    align-items: flex-end;
+                    align-content: flex-end;
+                    text-align: end;
+                    
+                    
+                }
+                .replyHolder > .replyDiv{
+                    width: 60%;
+                    background-color: yellowgreen;
+                    padding: 15px;
+                    border-radius: 20px;
+                    border-bottom-right-radius: 0px;
+                    margin: 10px;
+                    color: black;
+                }
+                .msgHolder > .msgContent{
+                    width: 60%;
+                    background-color: rgba(244, 241, 241, 0.9);
+                    padding: 15px;
+                    border-radius: 20px;
+                    border-bottom-left-radius: 0px;
+                    margin: 10px;
+                    color: black;
+                }
+                
+               
+                @media screen and (max-width: 1000px){
+                #msgContainer{
+                    width: 99%;
+                    margin: auto;
+                    }
+                
+                }
+                .hidediv{
+                    display: none;
+                }
+            </style>
+            <div class="modal">
+                <p>
+                Subject:<br>
+                <input type='text' placeholder='Subject' name='title'>
+                </p>
+                <p>
+                Compose:<br>
+                <textarea rows='20' name='compose'></textarea>
+                </p>
+                <section>
+                    <button id='submit'>Send </button>
+                    <button id='cancel' >Cancel</button>
+                </section>
+            </div>
+        </div>
+
+        <a href='{% url "runo:updateProfile" %}'>
+            <span class="decorator"></span>
+            <div>
+                Update Profile
+            </div>
+        </a>
+
+        <a href='{% url "runo:logout" %}'>
+            <span class="decorator"></span>
+            <div>
+                
+                Log out
+            </div>
+        </a>
+    </div>
+</div>
+
+{% endblock %}

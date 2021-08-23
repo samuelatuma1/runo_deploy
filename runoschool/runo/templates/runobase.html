@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Runo Dayspring School</title>
+    <style>
+        *{
+            margin: 0px;
+            font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+            overflow-x: hidden;
+        }
+        html{
+            scroll-behavior: smooth;
+        }
+        .noscript{
+            display: none;
+        }
+    </style>
+    <meta name='description' content='school in Nigeria'>
+    <noscript>
+        <style>
+            .noscript{
+                display: block;
+                background: rgba(0, 113, 113, 0.4);
+                border: 1px solid rgba(59, 215, 215, 0.3);
+                backdrop-filter: blur(7px);
+                box-shadow: 0px 8px 32px 0px rgba(1, 101, 101, 0.6);
+                margin: 30px;
+                border-radius: 20px;
+                padding: 20px;
+                text-align: center;
+            }
+        </style>
+    </noscript>
+
+
+    
+</head>
+<body>
+    <div class="noscript">
+        JavaScript is disabled.<br>
+        This page needs JavaScript to be enabled to function properly.
+    </div>
+
+
+
+    <div id='toggleMode'>
+        <style>
+            #toggleMode{
+            background-color: rgb(9, 14, 0);
+            width: 100%;
+            padding-left: 20px;
+            color: rgb(252, 252, 250);
+            padding: 12px;
+            }
+            #toggleMode > span{
+                background-color: white;
+                border: 5px solid white;
+                color: rgb(9, 14, 0);
+                border-radius: 4px;   
+            }
+
+            #toggleMode span > .toggleMode{
+                padding-left: 5px;
+                padding-right: 5px;
+                padding-top: 3px;
+                padding-bottom: 3px;
+                cursor: pointer;
+                
+            }
+            #toggleMode .modeActive{
+                color: white;
+                background-color: rgb(9, 14, 0);
+                border-top-right-radius: 5px;
+                border-bottom-right-radius: 5px;
+            }
+            .day{
+                background-color: transparent;
+                color: black;            
+            }
+            .night{
+                background-color: rgb(8, 12, 0);
+                color: white;
+            }
+            .colorful{
+                background-color: teal; 
+                color: white;
+            }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Allow users choose and maintain the mode they prefer
+                if(!localStorage.getItem('runoDisplayMode')){
+                    localStorage.setItem('runoDisplayMode', 'day')
+                }
+                else{
+                    document.body.classList.add(localStorage.getItem('runoDisplayMode'))
+                }
+                modes = document.querySelectorAll('#toggleMode .toggleMode')
+                modes.forEach(function(mode){
+                    mode.onclick = function(){
+                        document.querySelectorAll('#toggleMode .toggleMode').forEach(toggleMode => {
+                            toggleMode.classList.remove('modeActive')
+                            document.body.classList.remove(toggleMode.getAttribute('id'))
+                        })
+                        this.classList.add('modeActive')
+                        document.body.classList.add(this.getAttribute('id'))
+                        localStorage.setItem('runoDisplayMode', this.getAttribute('id'))
+                        
+                    }
+                })
+            })
+        </script>
+        Choose Theme
+        <span>
+            <span id='day' class='toggleMode'>LIGHT</span>
+            <span id='night' class='toggleMode'>DARK</span>
+            <span id='colorful' class='toggleMode'>COLORFUL</span>
+        </span>
+    </div>
+
+    <nav>
+        <style>
+            nav{
+                width: 100%;
+                /*position sticky and top 0 makes nav bar stick at the top when it reaches there*/
+                position: sticky;
+                top: 10px;
+                background-color: rgb(16, 58, 101);
+                padding-left: 25px;
+                padding-top: 25px;
+                padding-bottom: 25px;
+                padding-right: 0px;
+                /* box-shadow: 0px 0px 15px 0px rgb(11, 43, 75); */
+                /* height: 65px; */
+            }
+            @media screen and (max-width: 1360px){
+                nav{
+                    padding-right: 25px;
+                }
+            nav #menu {
+                 width: 75px;/*
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center; */
+                align-items: center;
+
+            }
+            nav #menu > div{
+                background-color: white;
+            }
+            #topMenu{
+                display: flex;
+                flex-wrap: nowrap;
+                /* justify-content: space-between; */
+                width: 150px;
+                cursor: pointer;
+            }
+            nav #menu > #firstBar{
+                width: 35px;
+                height: 2px;
+                border-radius: 1px;
+                margin: auto;
+                margin-bottom: 7px;
+            }
+            nav #menu > #secondBar{
+                width: 15px;
+                height: 3px;
+                border-radius: 50%;
+                margin: auto;
+                margin-bottom: 7px;
+            }
+            
+            nav #menu > #thirdBar{
+                width: 35px;
+                height: 2px;
+                border-radius: 1px;
+                margin: auto;
+                margin-bottom: 6px;
+            }
+            #topMenu span{
+                color: white;
+                font-size: x-large;
+            }
+            .dontShowNavifSmall{
+                display: none;
+            }
+            @keyframes shrink{
+                from{
+                    line-height: 0%;
+                    opacity: 0
+                }
+                to{
+                    line-height: 100%;
+                    opacity: 1;
+                }
+            }
+            .showNav{
+                display: flex;
+                flex-wrap: wrap;
+                background-color: rgb(16, 58, 101);
+                justify-content: center;
+                width: 80%;
+                margin: auto;
+                border-radius: 40px;
+                color: white;
+                border: 1px solid rgb(16, 58, 101);
+                padding: 20px;
+                animation-name: shrink;
+                animation-fill-mode: forwards;
+                animation-duration: 400ms;
+                
+            }
+            nav a{
+                text-decoration: none;
+                color: white;
+            }
+            /* .night .showNav{
+                background-color: rgb(8, 12, 0);
+                color: rgb(246, 247, 243);
+                border: 1px solid rgb(8, 12, 0);  
+            } */
+            .night nav a{
+                text-decoration: none;
+                color: white;
+            }
+            .showNav section, .showNav aside{
+                width: 100%;
+                padding-top: 15px;
+                padding-bottom: 20px;
+                font-size: x-large;
+                cursor: pointer;
+              
+            }
+            .showNav #current{
+                color: teal;
+                /* background-color: rgb(95, 123, 150); */
+                /* border-bottom-right-radius: 20px;
+                border-top-right-radius: 20px;
+                border-bottom-left-radius: 20px;
+                border-top-left-radius: 20px;
+                padding: 12px; */
+                
+                
+            }
+            .showNav #current a{
+                color: rgb(49, 193, 193);
+                font-weight: bolder;
+
+            }
+            
+            .showNav aside{
+
+                display: flex;
+                flex-wrap: wrap;
+                cursor: pointer;
+            }
+            .showNav aside > span{
+                width: 80%;
+                padding: 15px;
+                margin-bottom: 15px;
+                background-color: rgb(3, 22, 41);
+                text-align: center;
+            }
+            .showNav aside > span:hover{
+                box-shadow: 1px 1px 9px 1px rgb(1, 13, 26);
+            }
+
+        }
+
+        @media screen and (min-width: 1361px){
+            nav a{
+                text-decoration: none;
+                color: white;
+            }
+            #topMenu{
+                display: none;
+            }
+            #navigation{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-around;
+            }
+
+            #navigation section{
+                
+                color: white;
+                font-size: x-large;
+                padding: 18px;
+                cursor: pointer;
+            }
+            
+            #navigation section:hover{
+                box-shadow: 0px 1px 12px 1px rgb(3, 28, 53);
+                background-color: rgb(8, 38, 69);
+            }
+
+            #navigation #current{
+                color: teal;
+                /* background-color: rgb(204, 225, 245); */
+                border-bottom-right-radius: 20px;
+                border-top-right-radius: 20px;
+                border-bottom-left-radius: 20px;
+                border-top-left-radius: 20px;
+                
+            }
+            #navigation #current a{
+                color: rgb(53, 193, 193);
+                font-weight: bolder;
+            }
+
+            #navigation aside{
+                height: 100%;
+                background-color: rgb(5, 29, 53);
+                color: white;
+                display: flex;
+                flex-wrap: wrap;
+                padding-left: 20px;
+                border-bottom-left-radius: 26px;
+                border-top-left-radius: 26px;
+                cursor: pointer;
+            }
+
+            #navigation aside > span{
+                padding: 20px;
+                font-size: x-large;
+            }
+            #navigation aside:hover{
+                padding-left: 10px;
+                border-bottom-left-radius: 6px;
+                border-top-left-radius: 6px;
+            }
+
+            #navigation aside > span:hover{
+                background-color: teal;
+            }
+ 
+
+        }
+    
+        </style>
+
+        <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    menuButton = document.querySelector('nav #topMenu')
+                    menuButton.onclick = () => {
+                        navigation = document.querySelector('nav #navigation')
+                        // navigation.style.display = 'flex'
+                        navigation.classList.toggle('showNav')
+                    }
+                }) 
+        </script>
+        <div id='topMenu'>
+            <div id='menu'>
+                <div id='firstBar'></div>
+                <div id='secondBar'></div>
+                <div id='thirdBar'></div>
+            </div>
+            <span>MENU</span>
+            
+        </div>
+
+        <div id='navigation' class='dontShowNavifSmall'>
+            <!-- Links will be here-->
+            <section {% if section == 'home'%}id='current'{% endif %}><a href='{% url "runo:index" %}'>Home</a></section>
+            <section  {% if section == 'about'%}id='current'{% endif %}><a href='{% url "runo:about" %}'>About Us</a></section>
+            <section {% if section == 'academics'%}id='current'{% endif %}><a href='{% url "runo:academics" %}'>Academics</a></section>
+            
+            <section {% if section == ''%}id='current'{% endif %}><a href=''>PTA</a></section>
+
+            <aside>
+                <span><a href='{%url "runo:pupil"%}'>PUPILS</a></span>
+                <span><a href='{% url "runo:teacher" %}'>TEACHERS</a></span>
+                <span><a id='runoBaseSearchButton'>SEARCH</a></span>
+            </aside>
+        </div>
+    </nav>
+    <div class='runobaseSearch'>
+        <form method='POST' action='{% url "runo:index" %}'>
+            {% csrf_token %}
+        
+        <p><input name='searchData' id='runobaseSearch'><button>Search</button></p>
+        </form>
+
+        
+        <style>
+            .runobaseSearch{
+                 display: none;  
+                /* opacity: 0; */
+                transition: 0.5s ease;
+                padding: 15px;
+
+            }
+            .toggleThisSearch{
+                display: block;
+                opacity: 1;
+                box-shadow: 0px 1px 10px 0px black;
+            }
+            
+            
+            @media screen and (min-width: 1000px){
+                .runobaseSearch p{
+                    width: 50%;
+                    margin: auto;
+                }
+            }
+            .runobaseSearch p > input{
+                width: 70%;
+                min-height: 18px;
+                margin: 5px;
+                padding: 10px;
+                border-radius: 8px;
+                border: 1px solid grey;
+            }
+
+            .runobaseSearch p > button{
+                background-color: rgb(0, 0, 50);
+                color: aliceblue;
+                padding: 10px;
+                border: 1px solid rgb(0, 0, 50);
+                border-radius: 4px;
+                box-shadow: 1px 1px 3px 1px black;
+
+            }
+            
+        </style>
+    </div>
+    <script>
+        let baseSearch = document.querySelector('#runoBaseSearchButton')
+        baseSearch.onclick = () => {
+            let searchToExecute = document.querySelector('.runobaseSearch')
+            searchToExecute.classList.toggle('toggleThisSearch')
+        }
+        let querySearch = document.querySelector('.runobaseSearch p > button')
+        querySearch.onclick = () => {
+            let searchData = document.querySelector('.runobaseSearch p > input').value
+            if(searchData.length < 1){
+                return false
+            }
+            if(searchData){
+                if(validateBaseSearch(searchData)){
+                    
+                }
+                else{
+                    return false
+                }
+            }
+        }
+        function validateBaseSearch(search){
+            let first =  search[0]
+            valid = false
+            for(item of search){
+                if(item != first){
+                    valid = true
+                }
+            }
+            if(search.length < 1){valid = false}
+            return valid
+        }
+    </script>
+    
+    {% if allNews %}
+    <div id='searchResultForBase'>
+        {% if allNews %}
+        <style>        
+        #searchResultForBase{
+        
+            padding: 15px;
+            margin: auto;
+            border-radius: 20px;
+            box-shadow: 0px 1px 12px 1px black;
+            width: 90%;
+            overflow-x: visible;
+            z-index: 8;
+            margin-top: 15px;
+        }
+        @media screen and (min-width: 800px){
+            #searchResultForBase{
+                width: 50%;
+            }
+        }
+        #searchResultForBase .searchnews{
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+            justify-content: space-between;
+            transition: 0.5s ease;
+        }
+        #searchResultForBase .searchnews:hover{
+            box-shadow: 0px 0px 6px 0px black;
+            padding: 10px;
+            border-radius: 5px;
+            width: 105%;
+            z-index: 10;
+        }
+        #searchResultForBase a{
+            text-decoration: none;
+            color: black;
+            
+        }
+        .night  #searchResultForBase a{
+            color: aliceblue;
+        }
+        #searchResultForBase .searchnews .searchnewsImg{
+            width: 30%;
+
+        }
+        .searchnews .searchnewsImg img{
+            width: 100%;
+        }
+ 
+
+        </style>
+        <h2>Search Results</h2>
+        {% for newsArticle in allNews %}
+            <a href='{{ newsArticle.get_absolute_url }}'>  
+                <div  class='searchnews'>
+                    <div class='searchnewsDesc'>
+                        <h2>
+                            {{ newsArticle.title }}
+                        </h2>
+                        <p>{{ newsArticle.desc }}</p>
+                        
+
+                    </div>
+
+                    <div class='searchnewsImg'>
+                        <img src='{{ newsArticle.img.url }}'>
+                    </div>
+                </div>
+            </a>
+        {% empty %}
+            No result found
+        {% endfor %}
+    {% endif %}
+    </div>
+    {% endif %}
+
+    {% block body %}
+    {% endblock %}
+
+
+    <footer>
+        <style>
+            #footerExtraInfo{
+            display: flex;
+            flex-wrap: wrap;
+            background-color: teal;
+            justify-content: center;
+        }
+        #footerExtraInfo:hover{
+            box-shadow: 1px 1px 15px 1px rgb(8, 14, 0);
+        }
+        .night #footerExtraInfo{
+            background-color: rgb(13, 23, 1);
+        }
+        #footerExtraInfo section{
+            color: white;
+            text-align: center;
+            
+            padding-top: 40px;
+            padding-bottom: 40px;
+            font-size: x-large;
+        }
+        #footerExtraInfo a{
+            text-decoration: none;
+            color: white;
+        }
+        @media screen and (max-width: 1361px){
+            #footerExtraInfo section{
+                width: 100%;
+            }
+            #footerExtraInfo #first{
+                border-bottom: 2px solid white;
+            }
+
+        }
+
+        @media screen and (min-width: 1361px){
+            #footerExtraInfo section{
+                width: 40%;
+            }
+            #footerExtraInfo #first{
+                border-right: 2px solid white;
+            }
+        }
+        </style>
+        <div id='footerExtraInfo'>
+            <section id='first'>
+                <a href=''>Employment</a>
+            </section>
+
+            <section>
+                <a href=''>Our Policy</a>
+            </section>
+        </div>
+
+        <div id='footerSchoolDetails'>
+            {% if aboutSchool %}
+            <style>
+                #footerSchoolDetails{
+                    background-color: rgb(6, 26, 45);
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    color: rgb(243, 243, 250);
+                    padding-top: 40px;
+                    padding-bottom: 40px;
+                }
+                .night #footerSchoolDetails{
+                    background-color: black;
+                }
+                #footerSchoolDetails > a{
+                    color: white;
+                    padding: 10px;
+                    text-align: center;
+                    border-radius: 25px;
+                    border: 1px solid white;
+                    font-size: x-large;
+                    
+                }
+                #footerSchoolDetails h1, #footerSchoolDetails h3{
+                    width: 100%;
+                    text-align: center;
+                    padding-bottom: 20px;
+                }
+                #footerSchoolDetails h2{
+                    width: 50%;
+                    padding-bottom: 20px;
+                    text-align: center;
+                }
+                @media screen and (max-width: 1361px){
+                    #footerSchoolDetails > a{
+                    width: 60%;
+                }
+                }
+                @media screen and (min-width: 1361px){
+                    #footerSchoolDetails > a{
+                    width: 30%;
+                    text-align: center;
+                }
+                }
+                #footerSchoolDetails section{
+                    width: 60px;
+                    height: 60px;
+                    border-radius: 50%;
+                    margin-left: 20px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    border: 1px solid white;
+                }
+            </style>
+                <h1>{{ aboutSchool.school_name }}</h1>
+                <h2>{{ aboutSchool.school_address }}</h2>
+                <h3>Phone: {{ aboutSchool.school_phone }}</h3>
+            <!-- <p></p>  -->
+                
+                <a href='mailto:{{ aboutSchool.school_email }}' target='_blank'><aside>Write us a mail</aside></a>
+                <section><a href='#day' style='text-decoration: none; color: white;'>top</a></section>                
+            {% endif %}
+        </div>
+
+       
+        <div id='MarS'>
+            <style>
+                #MarS{
+                    background-color: white;
+                    color: black;
+                    padding:12px;
+                    text-align: end;
+                    font-size: large;
+                    font-weight: bold;
+                }
+                #MarS > span{
+                    background-color: black;
+                    padding: 8px;
+                    border-radius: 4px;
+                    color: white
+                }
+            </style>
+            Powered By 
+            <a style='color: transparent;' href='{% url "runo:adminPanel" %}'>Admin</a><span>M<span style='color: lightseagreen'>ar</span>S</span>
+        </div>
+    </footer>
+</body>
+</html>
